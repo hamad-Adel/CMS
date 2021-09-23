@@ -1,9 +1,9 @@
 <!-- Start header  -->
 <?php
-  session_start();
-(isset($_SESSION['admin_login'])) && header("Location: admin/");
-  $title = 'Latest Posts';
-  require_once 'includes/template/header.php'
+    !session_start() && session_start();
+    isset($_SESSION['admin_login']) && header("Location: admin/");
+    $title = 'Latest Posts';
+    require_once 'includes/template/header.php'
 ?>
 
 <?php require_once 'includes/db.php';?>
@@ -26,12 +26,11 @@
 
                 <?php
                 // get latest 10 Posts
-                $sql = 'SELECT * FROM `posts` WHERE `published_at` IS NULL';
+                $sql = 'SELECT * FROM `posts` WHERE `published_at` IS NOT NULL';
                 if (isset($_GET['category_id'])) {
                     $sql .= ' AND `Category_id` = ' . $_GET['category_id'];
                 }
                 $sql .= ' LIMIT 10';
-                echo '<p>'.$sql.'</p>';
                 $query = mysqli_query($dbh, $sql);
                 if($query) :
                   if(mysqli_affected_rows($dbh)) {

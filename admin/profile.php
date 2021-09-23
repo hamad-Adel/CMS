@@ -5,11 +5,10 @@
         header("Location:../index.php");
     require_once 'includes/template/header.php';
     require_once '../global/database_functions.php';
-    $sql = "SELECT * FROM `users` WHERE id = {$_SESSION['id']} AND `role` = 2";
+    $sql = "SELECT * FROM `users` WHERE id = {$_SESSION['id']} AND `role` > 0";
     $result = mysqli_query($dbh, $sql);
     if ($result->num_rows):
         $user = mysqli_fetch_assoc($result);
-    var_dump($user);
     endif;
 ?>
 <div id="wrapper">
